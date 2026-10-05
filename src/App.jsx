@@ -44,6 +44,8 @@ const App = () => {
       </>
   );
 
+ const [form] = Form.useForm();
+
   const agregarDato = (destinatario, direccion, estado) => {
       setDatos((datosActuales) =>{
           const  siguienteId =
@@ -97,6 +99,31 @@ const App = () => {
       setDatoEditando(null);
   };
 
+  const editarDato = (id, datosEditados) => {
+      setDatos((datosActuales) =>
+          datosActuales.map((dato) => {
+              if (dato.id !== id) {
+                  return dato;
+              }
+
+              const datoActualizado = {...dato, ...datosEditados, id};
+
+              return {
+                  ...datosActualizado,
+                  Acciones: crearAcciones(datoActualizado),
+              };
+          }),
+      );
+  };
+
+  const guardarEdicion = (datosEditados) =>{
+      if(!datosEditando){
+          return;
+      }
+
+      editarDato(datosEditando.id, datosEditados);
+      cerrarEdicion();
+  }
 
 
   const {
@@ -146,6 +173,12 @@ const App = () => {
             {index === '3' && <Configuracion />}
           </Content>
         </Layout>
+          <EditarEnvioModal
+              open={modalEditarAbierto}
+              dato={datoEditando}
+              onCancel={cerrarEdicion}
+              onGuardar={guardarEdicion}
+          />
       </Layout>
   );
 };
