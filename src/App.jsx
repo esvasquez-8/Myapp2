@@ -10,6 +10,7 @@ import { Layout, Menu, theme, Button} from 'antd';
 import Envios from "./components/layouts/Envios.jsx";
 import Agregar from "./components/layouts/Agregar.jsx";
 import Configuracion from "./components/layouts/Configuracion.jsx";
+import EditarEnvioModal from "./components/organisms/EditarEnvioModal.jsx";
 const { Sider, Content } = Layout;
 const App = () => {
   const [collapsed] = useState(true);
@@ -44,7 +45,6 @@ const App = () => {
       </>
   );
 
- const [form] = Form.useForm();
 
   const agregarDato = (destinatario, direccion, estado) => {
       setDatos((datosActuales) =>{
@@ -109,7 +109,7 @@ const App = () => {
               const datoActualizado = {...dato, ...datosEditados, id};
 
               return {
-                  ...datosActualizado,
+                  ...datoActualizado,
                   Acciones: crearAcciones(datoActualizado),
               };
           }),
@@ -117,11 +117,11 @@ const App = () => {
   };
 
   const guardarEdicion = (datosEditados) =>{
-      if(!datosEditando){
+      if(!datoEditando){
           return;
       }
 
-      editarDato(datosEditando.id, datosEditados);
+      editarDato(datoEditando.id, datosEditados);
       cerrarEdicion();
   }
 
