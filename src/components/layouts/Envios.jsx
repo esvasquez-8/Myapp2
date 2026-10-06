@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Table} from "antd";
 
 const columnas = [
@@ -12,9 +12,17 @@ const columnas = [
     { title: 'Estado', dataIndex: 'Estado', key: 'Estado' },
     { title: 'Acciones', dataIndex: 'Acciones', key: 'Acciones' },
 ];
-const Envios = ({datos = []}) => (
+const Envios = ({datos = []}) => {
+    const [cantidad, setCantidad] = useState(0);
+
+    return (
         <div>
             <h1 style={{color: "#000000"}}>Envios</h1>
+
+            <p>Envios registrados: {cantidad}</p>
+            <button onClick={() => setCantidad(cantidad + 1)}>
+                Agregar envio
+            </button>
             <Table
                 columns={columnas}
                 dataSource={datos}
@@ -22,6 +30,7 @@ const Envios = ({datos = []}) => (
                 pagination={false}
             />
         </div>
-);
+    );
+};
 
 export default Envios;
